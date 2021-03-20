@@ -11,7 +11,7 @@ const app = express();
 const wallet = new Wallet();
 const tp = new TransactionPool();
 const bc = new Blockchain();
-const p2pServer = new P2pServer(bc);
+const p2pServer = new P2pServer(bc, tp);
 
 app.use(bodyParser.json())
 
@@ -35,7 +35,8 @@ app.post('/mine', (req, res) => {
 app.post('/transact', (req, res) => {
     const { recipient, amount } = req.body;
     const transaction = wallet.createTransaction(recipient, amount, tp);
-    res.redirect('transactions');
+    p2pServer.broadcastTransaction(transaction);
+    res.redirect('/transactions');
 });
 
 app.listen(HTTP_PORT, () => console.log(`Listening on port ${HTTP_PORT}`));
