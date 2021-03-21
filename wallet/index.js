@@ -41,7 +41,7 @@ class Wallet {
 
     static blockchainWallet() {
         const blockchainWallet = new this();
-        blockchainWallet.address = 'blockchain-wallet';
+        blockchainWallet.publicKey = 'blockchain-wallet';
         return blockchainWallet;
     };
 
